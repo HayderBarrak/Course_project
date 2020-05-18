@@ -3,56 +3,117 @@ package com.futurex.course.CourseApp.Controller;
 import com.futurex.course.CourseApp.Repo.CourseRepository;
 import com.futurex.course.CourseApp.Service.CourseServiceImpl;
 import com.futurex.course.CourseApp.Model.Course;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.LongPredicate;
 
 @RestController
 @RequestMapping(path="/api")
 public class CourseController {
 
+    private final Logger log = LoggerFactory.getLogger(CourseController.class);
+
     @Autowired
     private CourseRepository courseRepository;
 
-  @Autowired
+    @Autowired
     private CourseServiceImpl courseService;
 
 
 
-    @GetMapping("/all")
-    public @ResponseBody List<Course> getCourses() {
-        return courseRepository.findAll();
+    @PostMapping("/save/course")
+    public ResponseEntity<Void> setCourses(@RequestBody Course courses) {
+        try {
+            courseRepository.save(courses);
+        } catch (Exception e){
+            log.error("Exception : {}" , e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+            return ResponseEntity.ok().build();
     }
 
-  @GetMapping("/user/{id}")
-    public Optional<Course> FindCourse(@PathVariable ("id") Long id) {
-        return courseService.findone(id);
+    @RequestMapping(method = RequestMethod.PUT,value = "/updatecourse/{id}")
+    public ResponseEntity<?> UpdateCourse(@RequestBody Course course ,@PathVariable Long id) {
+        try {
+            Course oldCouse = courseRepository.getOne(id);
+            Course newCourse = course.tocourse();
+            oldCouse.setAuthor(newCourse.getAuthor());
+            oldCouse.setCoursename(newCourse.getCoursename());
+            courseRepository.save(oldCouse);
+        } catch (Exception e) {
+            log.error("Exception : {}" , e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("The course successfully updated" ,HttpStatus.OK);
+    }
+
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getCourses() {
+        List<Course> courses ;
+        try {
+            courses  = courseRepository.findAll();
+            return ResponseEntity.ok(courses);
+        } catch (Exception e) {
+            log.error("Exception : {}" , e.getMessage());
+            return new ResponseEntity<>("Exception :" +e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+  @GetMapping("/course/{id}")
+    public ResponseEntity<?> FindCourse(@PathVariable ("id") Long id) {
+        try {
+            Optional<Course> course = courseService.findone(id);
+            return ResponseEntity.ok(course);
+        } catch (Exception e){
+            log.error("Exception : {}" , e.getMessage());
+            return new ResponseEntity<>("Exception :" +e.getMessage() ,HttpStatus.BAD_REQUEST);
+        }
     }
 
      @RequestMapping(method = RequestMethod.GET,
              produces = "application/json",
-             value = "/user/author/{author}")
-    public Course FindCourseAuthor(@PathVariable String author) {
-          return  courseRepository.findCourseByAuthor(author);
+             value = "/courseauthor/{author}")
+    public ResponseEntity<?> FindCourseAuthor(@PathVariable String author) {
+         try {
+        List<Course> courselst = courseService.findCourseByAthor(author);
+          return  ResponseEntity.ok(courselst);
+         } catch (Exception e){
+             log.error("Exception : {}" , e.getMessage());
+             return new ResponseEntity<>("Exception :" +e.getMessage() ,HttpStatus.BAD_REQUEST);
+         }
     }
 
   @RequestMapping(method = RequestMethod.GET,
              produces = "application/json",
-             value = "/user/courses/{course}")
-    public List<Course> FindCourseName(@PathVariable String course) {
-          return  courseRepository.findCourseByCoursename(course);
+             value = "/coursename/{course}")
+    public ResponseEntity<?> FindCourseName(@PathVariable String course) {
+      try {
+      List<Course> courselst = courseRepository.findCourseByCoursename(course);;
+          return  ResponseEntity.ok(courselst);
+      } catch (Exception e){
+          log.error("Exception : {}" , e.getMessage());
+          return new ResponseEntity<>("Exception :" +e.getMessage() ,HttpStatus.BAD_REQUEST);
+      }
     }
 
-    @PostMapping("/admin/save")
-    public void setCourses(@RequestBody Course courses) {
-        courseRepository.save(courses);
-    }
-
-    @RequestMapping(method = RequestMethod.DELETE,value = "/admin/delete/{id}")
-    public void deleteCourse(@PathVariable Long id) {
-        courseRepository.deleteById(id);
+    @RequestMapping(method = RequestMethod.DELETE,value = "/delete/{id}")
+    public ResponseEntity<Void> deleteCourse(@PathVariable String ids) {
+        try {
+            String str [] = ids.split(",");
+            for (String id : str)
+            courseRepository.deleteById(Long.parseLong(id));
+        } catch (Exception e){
+            log.error("Exception : {}" , e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok().build();
     }
 
 
@@ -74,7 +135,5 @@ public class CourseController {
 //    public Course getCourses(@PathVariable ("id") Long id) {
 //        return courseRepository.getOne(id);
 //    }
-
-
 
 }

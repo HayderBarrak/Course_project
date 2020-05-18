@@ -7,6 +7,7 @@ import com.futurex.course.CourseApp.Service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service("CourseService")
@@ -22,7 +23,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course findCourseByAthor(String author) {
+    public List<Course> findCourseByAthor(String author) {
         return courseRepository.findCourseByAuthor(author);
     }
 }

@@ -19,7 +19,11 @@ public class Course implements Serializable {
     private String coursename;
     private String author;
 
-    public Course() {
+    public Course tocourse() {
+        Course course = new Course();
+        course.setAuthor(author);
+        course.setCoursename(coursename);
+        return course;
     }
 
     public Long getCourseid() {

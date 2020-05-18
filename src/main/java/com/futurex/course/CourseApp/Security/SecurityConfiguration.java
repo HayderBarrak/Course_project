@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // configure access rules
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
-                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/**").hasRole("ADMIN")
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated();
     }
