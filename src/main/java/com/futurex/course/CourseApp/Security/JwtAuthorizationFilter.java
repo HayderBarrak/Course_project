@@ -1,7 +1,7 @@
 package com.futurex.course.CourseApp.Security;
 
 import com.auth0.jwt.JWT;
-import com.futurex.course.CourseApp.Model.User;
+import com.futurex.course.CourseApp.Domain.User;
 import com.futurex.course.CourseApp.Repo.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

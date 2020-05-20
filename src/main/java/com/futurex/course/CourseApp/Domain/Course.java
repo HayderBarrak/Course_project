@@ -1,4 +1,4 @@
-package com.futurex.course.CourseApp.Model;
+package com.futurex.course.CourseApp.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.math.BigInteger;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

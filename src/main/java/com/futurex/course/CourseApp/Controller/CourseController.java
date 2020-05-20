@@ -2,7 +2,7 @@ package com.futurex.course.CourseApp.Controller;
 
 import com.futurex.course.CourseApp.Repo.CourseRepository;
 import com.futurex.course.CourseApp.Service.CourseServiceImpl;
-import com.futurex.course.CourseApp.Model.Course;
+import com.futurex.course.CourseApp.Domain.Course;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.LongPredicate;
 
 @RestController
 @RequestMapping(path="/api")
@@ -103,14 +102,14 @@ public class CourseController {
       }
     }
 
-    @RequestMapping(method = RequestMethod.DELETE,value = "/delete/{id}")
+    @RequestMapping(method = RequestMethod.DELETE,value = "/delete/{ids}")
     public ResponseEntity<Void> deleteCourse(@PathVariable String ids) {
         try {
             String str [] = ids.split(",");
-            for (String id : str)
+            for (String id : ids.split(","))
             courseRepository.deleteById(Long.parseLong(id));
         } catch (Exception e){
-            log.error("Exception : {}" , e.getMessage());
+            log.error("Exception : {}" , e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok().build();

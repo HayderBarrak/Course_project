@@ -1,4 +1,4 @@
-package com.futurex.course.CourseApp.Model;
+package com.futurex.course.CourseApp.Domain;
 
 public class LoginViewModel {
     private String username;

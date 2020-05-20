@@ -1,6 +1,6 @@
 package com.futurex.course.CourseApp.Service;
 
-import com.futurex.course.CourseApp.Model.Course;
+import com.futurex.course.CourseApp.Domain.Course;
 
 import java.util.List;
 import java.util.Optional;

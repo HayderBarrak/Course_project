@@ -1,9 +1,8 @@
 package com.futurex.course.CourseApp.Service;
 
 
-import com.futurex.course.CourseApp.Model.Course;
+import com.futurex.course.CourseApp.Domain.Course;
 import com.futurex.course.CourseApp.Repo.CourseRepository;
-import com.futurex.course.CourseApp.Service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

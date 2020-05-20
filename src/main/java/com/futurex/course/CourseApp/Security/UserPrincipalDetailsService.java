@@ -1,6 +1,6 @@
 package com.futurex.course.CourseApp.Security;
 
-import com.futurex.course.CourseApp.Model.User;
+import com.futurex.course.CourseApp.Domain.User;
 import com.futurex.course.CourseApp.Repo.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

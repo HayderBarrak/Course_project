@@ -1,6 +1,6 @@
 package com.futurex.course.CourseApp.Security;
 
-import com.futurex.course.CourseApp.Model.User;
+import com.futurex.course.CourseApp.Domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -61,6 +61,6 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.user.getActive() == 1;
+        return this.user.getActive();
     }
 }

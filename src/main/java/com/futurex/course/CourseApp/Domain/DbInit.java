@@ -1,4 +1,4 @@
-package com.futurex.course.CourseApp.Model;
+package com.futurex.course.CourseApp.Domain;
 
 import com.futurex.course.CourseApp.Repo.UserRepository;
 import org.springframework.boot.CommandLineRunner;

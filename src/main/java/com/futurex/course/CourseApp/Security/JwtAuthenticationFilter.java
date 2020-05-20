@@ -2,7 +2,7 @@ package com.futurex.course.CourseApp.Security;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.futurex.course.CourseApp.Model.LoginViewModel;
+import com.futurex.course.CourseApp.Domain.LoginViewModel;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
